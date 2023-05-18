@@ -9,9 +9,9 @@ public interface PostService {
     List<Post> getAllPosts();
     Post getPost(int id);
 
-    MessageResponse addPost(Post post);
-    MessageResponse deletePost(int id);
+    MessageResponse addPost(Post post, String token);
+    MessageResponse deletePost(int id, String token);
 
-    Post updatePost(int id, Post post);
+    MessageResponse updatePost(int id, Post post, String token);
 
 }

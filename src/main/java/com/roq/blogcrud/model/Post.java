@@ -21,7 +21,7 @@ public class Post {
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "user_id")
     private User user;
     @CreationTimestamp
     private LocalDateTime dateTime;
