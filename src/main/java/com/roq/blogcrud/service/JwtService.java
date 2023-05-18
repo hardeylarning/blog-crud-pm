@@ -19,6 +19,9 @@ import java.util.function.Function;
 public class JwtService {
     @Value("${jwt.secret}")
     private static String SECRET_KEY;
+
+    @Value("${jwt.timeout}")
+    private static long TIMEOUT;
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -52,7 +55,7 @@ public class JwtService {
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + TIMEOUT))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
