@@ -18,10 +18,10 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     @Value("${jwt.secret}")
-    private static String SECRET_KEY;
+    private String SECRET_KEY;
 
     @Value("${jwt.timeout}")
-    private static long TIMEOUT;
+    private long TIMEOUT;
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -41,6 +41,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
+        System.out.println("SECRET KEY: "+ SECRET_KEY);
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }

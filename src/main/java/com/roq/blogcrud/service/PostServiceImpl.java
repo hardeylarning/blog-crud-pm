@@ -8,6 +8,7 @@ import com.roq.blogcrud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,13 +32,6 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public MessageResponse addPost(Post post, String token) {
-        boolean postAuthor = isPostAuthor(token);
-        if (!postAuthor)
-            return MessageResponse.builder()
-                    .code("401")
-                    .message("Unauthorized")
-                    .build();
-
         if (post == null)
             return MessageResponse.builder()
                     .code("400")
@@ -45,6 +39,7 @@ public class PostServiceImpl implements PostService{
                     .build();
 
         User author = author(token);
+        System.out.println("User: "+ author);
         if (author != null)
             post.setUser(author);
 
@@ -90,6 +85,8 @@ public class PostServiceImpl implements PostService{
         Post post1 = getPost(id);
         if (post1 != null) {
             post.setId(id);
+            post.setUser(post1.getUser());
+            post.setDateTime(LocalDateTime.now());
             postRepository.save(post);
             return MessageResponse.builder()
                     .code("200")

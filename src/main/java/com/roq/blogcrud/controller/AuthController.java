@@ -4,6 +4,7 @@ import com.roq.blogcrud.dto.JwtResponse;
 import com.roq.blogcrud.dto.LoginRequest;
 import com.roq.blogcrud.dto.RegisterRequest;
 import com.roq.blogcrud.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +20,12 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<JwtResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<JwtResponse> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(userService.register(request));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<JwtResponse> authenticate(@RequestBody LoginRequest request) {
+    public ResponseEntity<JwtResponse> authenticate(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(userService.authenticate(request));
     }
 }
