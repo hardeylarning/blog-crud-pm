@@ -2,16 +2,15 @@ server:
   port: 8081
 
 jwt:
-  secret: 4528472B4B6250655368566D597133743677397A24432646294A404D63516654
+  secret: 32646294A404D635166547133743677397A2444528472B4B6250655368566D59
   timeout: 30000000
 
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: hardeyboi11
+    password:
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: create-drop
 

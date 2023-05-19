@@ -25,7 +25,7 @@ public class PostController {
     @GetMapping("view/{id}")
     public ResponseEntity<Post> post(@PathVariable int id) throws NotFoundException {
         Post post = postService.getPost(id);
-        if (post == null) throw new NotFoundException("Post with "+id + "not found");
+        if (post == null) throw new NotFoundException("Post with "+id + " not found");
         return ResponseEntity.ok(post);
     }
 
