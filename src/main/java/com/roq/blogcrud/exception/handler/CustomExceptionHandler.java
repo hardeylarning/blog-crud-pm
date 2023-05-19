@@ -8,7 +8,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,24 +29,24 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorMessage> badRequest(BadRequestException badRequestException) {
-        ErrorMessage message = new ErrorMessage(String.valueOf(HttpStatus.BAD_REQUEST), badRequestException.getMessage());
+        ErrorMessage message = new ErrorMessage("BAD REQUEST", badRequestException.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorMessage> notFound(NotFoundException notFoundException) {
-        ErrorMessage message = new ErrorMessage(String.valueOf(HttpStatus.NOT_FOUND), notFoundException.getMessage());
+        ErrorMessage message = new ErrorMessage("NOT FOUND", notFoundException.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<ErrorMessage> forbidden(ForbiddenException forbiddenException) {
-        ErrorMessage message = new ErrorMessage(String.valueOf(HttpStatus.FORBIDDEN), forbiddenException.getMessage());
+        ErrorMessage message = new ErrorMessage("FORBIDDEN", forbiddenException.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(message);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ErrorMessage> unauthorized(UnauthorizedException unauthorizedException) {
-        ErrorMessage message = new ErrorMessage(String.valueOf(HttpStatus.UNAUTHORIZED), unauthorizedException.getMessage());
+        ErrorMessage message = new ErrorMessage("UNAUTHORIZED", unauthorizedException.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
     }
 

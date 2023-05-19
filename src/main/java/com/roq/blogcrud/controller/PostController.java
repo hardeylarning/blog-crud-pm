@@ -1,6 +1,7 @@
 package com.roq.blogcrud.controller;
 
 import com.roq.blogcrud.dto.MessageResponse;
+import com.roq.blogcrud.exception.NotFoundException;
 import com.roq.blogcrud.model.Post;
 import com.roq.blogcrud.service.PostService;
 import jakarta.validation.Valid;
@@ -22,8 +23,10 @@ public class PostController {
     }
 
     @GetMapping("view/{id}")
-    public ResponseEntity<Post> post(@PathVariable int id) {
-        return ResponseEntity.ok(postService.getPost(id));
+    public ResponseEntity<Post> post(@PathVariable int id) throws NotFoundException {
+        Post post = postService.getPost(id);
+        if (post == null) throw new NotFoundException("Post with "+id + "not found");
+        return ResponseEntity.ok(post);
     }
 
     @PostMapping

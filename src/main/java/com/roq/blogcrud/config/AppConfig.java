@@ -1,6 +1,8 @@
 package com.roq.blogcrud.config;
 
 
+import com.roq.blogcrud.exception.ForbiddenException;
+import com.roq.blogcrud.exception.NotFoundException;
 import com.roq.blogcrud.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +24,14 @@ public class AppConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return  username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return  username -> {
+            try {
+                return userRepository.findByEmail(username)
+                        .orElseThrow(() -> new ForbiddenException("Incorrect username or password"));
+            } catch (ForbiddenException e) {
+                throw new RuntimeException(e);
+            }
+        };
     }
 
     @Bean
